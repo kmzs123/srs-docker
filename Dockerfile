@@ -34,9 +34,9 @@ RUN ./configure ${CONFARGS} && make ${MAKEARGS} && make install
 ############################################################
 FROM debian:stable-slim AS dist
 
-ARG BUILDPLATFORM
-ARG TARGETPLATFORM
-RUN echo "BUILDPLATFORM: $BUILDPLATFORM, TARGETPLATFORM: $TARGETPLATFORM"
+#ARG BUILDPLATFORM
+#ARG TARGETPLATFORM
+#RUN echo "BUILDPLATFORM: $BUILDPLATFORM, TARGETPLATFORM: $TARGETPLATFORM"
 
 # Expose ports for streaming @see https://github.com/ossrs/srs#ports
 EXPOSE 1935 1985 8080 5060 9000 8000/udp 10080/udp
@@ -48,10 +48,9 @@ RUN apt-get update && \
     apt-get install -y ffmpeg && \
     rm -rf /var/lib/apt/lists/* && \
     mkdir -p /usr/local/srs/objs/ffmpeg/bin/ && \
-    cp /usr/bin/ffmpeg /usr/local/srs/objs/ffmpeg/bin/ffmpeg
-
-# Test the version of binaries.
-RUN ldd /usr/local/srs/objs/ffmpeg/bin/ffmpeg && \
+    cp /usr/bin/ffmpeg /usr/local/srs/objs/ffmpeg/bin/ffmpeg && \
+    # Test the version of binaries.
+    ldd /usr/local/srs/objs/ffmpeg/bin/ffmpeg && \
     /usr/local/srs/objs/ffmpeg/bin/ffmpeg -version && \
     ldd /usr/local/srs/objs/srs
 
