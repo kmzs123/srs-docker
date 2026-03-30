@@ -45,7 +45,7 @@ EXPOSE 1935 1985 8080 5060 9000 8000/udp 10080/udp
 COPY --from=build /usr/local/srs /usr/local/srs
 # FFMPEG
 RUN apt-get update && \
-    apt-get install -y ffmpeg && \
+    apt-get install -y ffmpeg --no-install-recommends --no-install-suggests && \
     rm -rf /var/lib/apt/lists/* && \
     mkdir -p /usr/local/srs/objs/ffmpeg/bin/ && \
     cp /usr/bin/ffmpeg /usr/local/srs/objs/ffmpeg/bin/ffmpeg && \
